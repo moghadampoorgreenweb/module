@@ -1,0 +1,17 @@
+{
+    "name": "a.moghadampoor/camp_directadmin",
+    "autoload": {
+        "psr-4": {
+            "AMoghadampoor\\CampDirectadmin\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "a.moghadampoor",
+            "email": "a.moghadampoor@greenweb.ir"
+        }
+    ],
+    "require": {
+        "uxweb/sweet-alert": "^2.0"
+    }
+}

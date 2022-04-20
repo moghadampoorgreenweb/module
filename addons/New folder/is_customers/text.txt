@@ -1,0 +1,1 @@
+{"whmcsVersion":"8.2.1-release.1","version":"1.0","access":"1","modulelink":"index.php?m=is_customers"}

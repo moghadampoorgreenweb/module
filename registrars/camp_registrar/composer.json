@@ -1,0 +1,17 @@
+{
+    "name": "a.moghadampoor/camp_registrar",
+    "autoload": {
+        "psr-4": {
+            "AMoghadampoor\\CampRegistrar\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "a.moghadampoor",
+            "email": "a.moghadampoor@greenweb.ir"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.4"
+    }
+}

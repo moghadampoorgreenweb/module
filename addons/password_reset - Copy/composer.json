@@ -1,0 +1,17 @@
+{
+    "name": "a.moghadampoor/password_reset",
+    "autoload": {
+        "psr-4": {
+            "AMoghadampoor\\PasswordReset\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "a.moghadampoor",
+            "email": "a.moghadampoor@greenweb.ir"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.57"
+    }
+}

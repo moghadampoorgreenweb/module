@@ -1,0 +1,1 @@
+"Client error: `DELETE https:\/\/multi.test.greenweb.ir\/domain\/alinaghimweewrok.com\/child` resulted in a `422 Unprocessable Entity` response:\n{\"error\":{\"message\":\"The given data was invalid.\",\"details\":[\"The ns field is required.\"],\"msgType\":\"msg.unknown\"}}\n"

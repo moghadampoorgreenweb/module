@@ -1,0 +1,9 @@
+Box\Spout\Common\Exception\IOException: Could not open C:\xampp.7.4\htdocs\whm\modules\addons\suport_module\Config/../Storage/jsonformatter.txt for reading! (Could not open C:\xampp.7.4\htdocs\whm\modules\addons\suport_module\Config/../Storage/jsonformatter.txt for reading.) in C:\xampp.7.4\htdocs\whm\modules\addons\suport_module\vendor\box\spout\src\Spout\Reader\ReaderAbstract.php:130
+Stack trace:
+#0 C:\xampp.7.4\htdocs\whm\modules\addons\suport_module\vendor\rap2hpoutre\fast-excel\src\Importable.php(103): Box\Spout\Reader\ReaderAbstract->open('C:\\xampp.7.4\\ht...')
+#1 C:\xampp.7.4\htdocs\whm\modules\addons\suport_module\vendor\rap2hpoutre\fast-excel\src\Importable.php(44): Rap2hpoutre\FastExcel\FastExcel->reader('C:\\xampp.7.4\\ht...')
+#2 C:\xampp.7.4\htdocs\whm\modules\addons\suport_module\Report\Report.php(39): Rap2hpoutre\FastExcel\FastExcel->import('C:\\xampp.7.4\\ht...')
+#3 C:\xampp.7.4\htdocs\whm\modules\addons\suport_module\suport_module.php(133): Report::importExel('jsonformatter.t...', 'true')
+#4 C:\xampp.7.4\htdocs\whm\modules\addons\suport_module\suport_module.php(125): importExel(Object(Report))
+#5 C:\xampp.7.4\htdocs\whm\admin\addonmodules.php(0): suport_module_output(Array)
+#6 {main}

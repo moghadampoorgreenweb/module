@@ -1,0 +1,15 @@
+{
+    "name": "a.moghadampoor/sadegh_panel",
+    "autoload": {
+        "psr-4": {
+            "AMoghadampoor\\SadeghPanel\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "a.moghadampoor",
+            "email": "a.moghadampoor@greenweb.ir"
+        }
+    ],
+    "require": {}
+}
