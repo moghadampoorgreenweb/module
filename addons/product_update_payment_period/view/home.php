@@ -10,18 +10,18 @@
     <form action="">
         <input type="hidden" name="module" value="product_update_payment_period">
         <div class="form-group">
-            <label for="pwd">Operation:</label>
+            <label for="pwd">Operation *:</label>
             <select name="operation" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" >
                 <option value="Percent" class="option" >Percent</option>
                 <option value="Total" class="option" >Total</option>
             </select>
         </div>
         <div class="form-group">
-                <label for="amount">Price increase :</label>
+                <label for="amount">Price increase *:</label>
             <input type="text" name="amount" class="form-control" id="amount">
         </div>
         <div class="form-group">
-            <label for="pwd">Price cycle:</label>
+            <label for="pwd">Price cycle *:</label>
             <select name="cycle" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" multiple>
                 <option value="monthly" class="option" >monthly</option>
                 <option value="quarterly" class="option" >quarterly</option>
@@ -34,7 +34,7 @@
 
         <div class="form-group">
             <label for="pwd">Product (optional):</label>
-            <select name="product" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" multiple>
+            <select name="product[]" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" multiple>
                 <?php
                 $data->each(function ($item){
                     echo "
@@ -46,7 +46,7 @@
         </div>
 
         <div class="form-group">
-            <label for="pwd">Currency:</label>
+            <label for="pwd">Currency *:</label>
             <select name="currency" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" multiple>
                 <?php
                 $currency->each(function ($item){
@@ -60,7 +60,7 @@
 
 
         <div class="form-group">
-            <label for="pwd">Group:</label>
+            <label for="pwd">Group (optional):</label>
             <select name="group" id="" class="mce-selectbox form-control"  style="width: 100%" multiple>
                 <?php
                 $group->each(function ($item){

@@ -10,7 +10,6 @@ class ModuleController
     private $data;
     private Model $model;
 
-
     public function __construct($data)
     {
         $this->data = $data;
@@ -27,10 +26,11 @@ class ModuleController
     public function month()
     {
         $request = $this->getData();
+        $this->update();
         if (is_null($request['amount']) & empty($request['amount']))
-        if (is_null($request['cycle']) & empty($request['cycle']) | is_null($request['group']) & empty($request['group'])) {
-            return false;
-        }
+            if (is_null($request['cycle']) & empty($request['cycle']) | is_null($request['group']) & empty($request['group'])) {
+                return false;
+            }
         if (is_null($request['currency']) & empty($request['currency'])) {
             return false;
         }
@@ -46,6 +46,26 @@ class ModuleController
         return HelperModule::getTotal($key, $value);
     }
 
+    public function update()
+    {
+        $request = $this->getData();
+        if (!is_null($request['product']) && !empty($request['product'])) {
+            $data = $this->model->whereAllNotCurrency('id_tblpricing', $request['product']);
+            $data->each(function ($item) use ($request, $data) {
+                //var_dump($item);
+                $this->model->updateCycleGroup($request['product'], [
+                    $request['cycle'] =>$this->operation($request['amount'],
+                        $item->$request['cycle'],
+                        $request['operation'])
+                ]);
+            });
+            echo "<pre>";
+var_dump($request);
+          //  $this->bulkUpdate($data,$request,$item->$request['cycle']);
+            file_put_contents(__DIR__ . '/txt.txt', json_encode($data->toArray()));
+            //    $this->model->updateCycleGroup($request['product'],$data);
+        }
+    }
 
     /**
      * @return mixed
@@ -73,7 +93,9 @@ class ModuleController
     {
         $data->each(function ($item) use ($request, $month) {
             $this->model->updateAllCycleGroup($item->id_tblpricing, [
-                $month => $this->operation($request['amount'], $item->$month, $request['operation']),
+                    $month => $this->operation($request['amount'],
+                    $item->$month,
+                    $request['operation']),
             ]);
         });
     }

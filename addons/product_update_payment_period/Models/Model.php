@@ -46,6 +46,25 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 'tblpricing.id as id_tblpricing')
             ->get())->where($key, $where)->where('currency',$currency);
     }
+    public function whereAllNotCurrency($key, $where)
+    {
+        return (Capsule::table('tblpricing')
+            ->join('tblproducts', 'tblpricing.relid', 'tblproducts.id')
+            ->join('tblproductgroups', 'tblproductgroups.id', 'tblproducts.gid')
+            ->join('tblcurrencies', 'tblcurrencies.id', 'tblpricing.currency')
+            ->select(
+                'tblcurrencies.code as name_tblcurrencies',
+                'tblproductgroups.name as name_tblproductgroups',
+                'tblproductgroups.id as id_tblproductgroups',
+                'tblpricing.*',
+                'tblproducts.*',
+                'tblproducts.type as type_tblproducts',
+                'tblpricing.type as type_tblpricing',
+                'tblproducts.id as id_tblproducts',
+                'tblpricing.id as id_tblpricing',
+                'tblpricing.id as id_tblpricing')
+            ->get())->where($key, $where);
+    }
 
     public function getGroup()
     {
@@ -72,6 +91,20 @@ class Model extends \Illuminate\Database\Eloquent\Model
                     ->update($out);
                 echo "ID:".$out['id'] .'||'. $value ."<br>";
             }
+        }catch (Exception $e){
+            file_put_contents(__DIR__.'/txt.txt',json_encode($e));
+        }
+    }
+
+   public function updateCycleGroup($idTblPricing,$data)
+    {
+        try {
+                Capsule::table('tblpricing')
+                    ->where('id',$idTblPricing)
+                    ->where('type','product')
+                    ->update($data);
+                echo "ID:".$idTblPricing ."<br>";
+
         }catch (Exception $e){
             file_put_contents(__DIR__.'/txt.txt',json_encode($e));
         }
