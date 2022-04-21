@@ -1,0 +1,15 @@
+{
+    "name": "a.moghadampoor/product_update_payment_period",
+    "autoload": {
+        "psr-4": {
+            "AMoghadampoor\\ProductUpdatePaymentPeriod\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "a.moghadampoor",
+            "email": "a.moghadampoor@greenweb.ir"
+        }
+    ],
+    "require": {}
+}

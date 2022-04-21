@@ -1,12 +1,99 @@
 <?php
-use    Illuminate\Database\Capsule\Manager as Capsule;
 
-class Model extends password_reset\Model\Model
+namespace product_update_payment_period\Models;
+
+use    Illuminate\Database\Capsule\Manager as Capsule;
+use Punic\Exception;
+
+class Model extends \Illuminate\Database\Eloquent\Model
 {
-    protected $table='product_update_payment_period';
+    protected $table = 'tblpricing';
+
     public function getAll()
     {
-
+        return (Capsule::table('tblpricing')
+            ->join('tblproducts', 'tblpricing.relid', 'tblproducts.id')
+            ->join('tblproductgroups', 'tblproductgroups.id', 'tblproducts.gid')
+            ->join('tblcurrencies', 'tblcurrencies.id', 'tblpricing.currency')
+            ->select(
+                'tblcurrencies.code as name_tblcurrencies',
+                'tblproductgroups.name as name_tblproductgroups',
+                'tblpricing.*', 'tblproducts.*',
+                'tblproducts.type as type_tblproducts',
+                'tblpricing.type as type_tblpricing',
+                'tblproducts.id as id_tblproducts',
+                'tblpricing.id as id_tblpricing',
+                'tblpricing.id as id_tblpricing')
+            ->get())->where('type_tblpricing', 'product');
     }
+
+    public function whereAll($key, $where,$currency=null)
+    {
+        return (Capsule::table('tblpricing')
+            ->join('tblproducts', 'tblpricing.relid', 'tblproducts.id')
+            ->join('tblproductgroups', 'tblproductgroups.id', 'tblproducts.gid')
+            ->join('tblcurrencies', 'tblcurrencies.id', 'tblpricing.currency')
+            ->select(
+                'tblcurrencies.code as name_tblcurrencies',
+                'tblproductgroups.name as name_tblproductgroups',
+                'tblproductgroups.id as id_tblproductgroups',
+                'tblpricing.*',
+                'tblproducts.*',
+                'tblproducts.type as type_tblproducts',
+                'tblpricing.type as type_tblpricing',
+                'tblproducts.id as id_tblproducts',
+                'tblpricing.id as id_tblpricing',
+                'tblpricing.id as id_tblpricing')
+            ->get())->where($key, $where)->where('currency',$currency);
+    }
+
+    public function getGroup()
+    {
+        return Capsule::table('tblproductgroups')
+            ->select('tblproductgroups.*')
+            ->get();
+    }
+
+    public function getCurrency()
+    {
+        return Capsule::table('tblcurrencies')
+            ->select('tblcurrencies.*')
+            ->get();
+    }
+
+    public function updateAllCycleGroup($idTblPricing,$data)
+    {
+        try {
+            list($value, $out) = $this->checkZero($data, $idTblPricing);
+            foreach ($out as $value){
+                Capsule::table('tblpricing')
+                    ->where('id',$out['id'])
+                    ->where('type','product')
+                    ->update($out);
+                echo "ID:".$out['id'] .'||'. $value ."<br>";
+            }
+        }catch (Exception $e){
+            file_put_contents(__DIR__.'/txt.txt',json_encode($e));
+        }
+    }
+
+    /**
+     * @param $data
+     * @param $idTblPricing
+     * @return array
+     */
+    public function checkZero($data, $idTblPricing)
+    {
+        foreach ($data as $key => $value) {
+            if ($value > 0) {
+                $out['id'] = $idTblPricing;
+                $out[$key] = $value;
+            } else {
+                unset($data[$key]);
+            }
+        }
+        return array($value, $out);
+    }
+
 
 }

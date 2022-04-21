@@ -1,10 +1,17 @@
 <?php
 
+include_once __DIR__.'/vendor/autoload.php';
+include_once __DIR__.'/Models/Model.php';
+include_once __DIR__.'/Controllers/ModuleController.php';
+include_once __DIR__.'/Helpers/HelperModule.php';
+
+
 if (!defined("WHMCS"))
     die("This file cannot be accessed directly");
 
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use product_update_payment_period\Models\Model ;
 
 
 function product_update_payment_period_config()
@@ -24,6 +31,7 @@ function product_update_payment_period_config()
         ));
     return $configarray;
 }
+
 
 
 function product_update_payment_period_activate()
@@ -94,12 +102,22 @@ function product_update_payment_period_deactivate()
 
 function product_update_payment_period_output($vars)
 {
-
-
+    $controller=new ModuleController($_REQUEST);
+    $model=new Model();
+    $data= $model->getAll();
+    $group= $model->getGroup();
+    $currency= $model->getCurrency();
 
     include __DIR__ . "/view/home.php";
 
 }
+
+/**
+ * @param int $total
+ * @param int $value
+ * @return int
+ */
+
 
 
 function product_update_payment_period_clientarea($vars)
