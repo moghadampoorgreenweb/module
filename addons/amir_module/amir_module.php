@@ -1,5 +1,11 @@
 <?php
 
+include_once __DIR__.'/vendor/autoload.php';
+include_once __DIR__.'/Models/Model.php';
+include_once __DIR__.'/Controllers/ModuleController.php';
+include_once __DIR__.'/Helpers/HelperModule.php';
+
+
 if (!defined("WHMCS"))
     die("This file cannot be accessed directly");
 
@@ -96,8 +102,16 @@ function amir_module_output($vars)
 {
 
     $module = $vars['modulelink'];
+    $users = \amir_module\Helpers\HelperModule::getClients();
+//    d($users);
+    // dd($users);
+//    echo "<pre>";
+//    var_dump($users);
 
-    $users = localAPI('GetClients');
+   $controller=new ModuleController($_REQUEST);
+    $model=new \amir_module\Models\Model();
+
+
 
     switch ($_GET['action']) {
         case null:
