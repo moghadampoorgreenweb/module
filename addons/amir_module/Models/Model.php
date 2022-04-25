@@ -9,6 +9,14 @@ class Model extends \Illuminate\Database\Eloquent\Model
 {
     protected $table = 'modulesmsnotify';
 
+
+    public  function getMethodPayment()
+    {
+
+        return collect(localAPI('GetPaymentMethods'));
+    }
+
+
     public function getAll()
     {
         return Capsule::table('modulesmsnotify')->all();

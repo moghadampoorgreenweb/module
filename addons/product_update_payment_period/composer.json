@@ -11,5 +11,7 @@
             "email": "a.moghadampoor@greenweb.ir"
         }
     ],
-    "require": {}
+    "require": {
+        "larapack/dd": "^1.1"
+    }
 }

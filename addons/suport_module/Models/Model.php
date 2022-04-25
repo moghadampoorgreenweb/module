@@ -3,7 +3,7 @@
 use    Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Facades\DB;
 
-include __DIR__ . '/../Response/Response.php';
+include __DIR__ . '/../Responses/Response.php';
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {

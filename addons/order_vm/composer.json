@@ -1,0 +1,18 @@
+{
+    "name": "a.moghadampoor/order_vm",
+    "autoload": {
+        "psr-4": {
+            "AMoghadampoor\\OrderVm\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "a.moghadampoor",
+            "email": "a.moghadampoor@greenweb.ir"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper":"<5.3.4",
+        "larapack/dd": "^1.1"
+    }
+}

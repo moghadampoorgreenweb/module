@@ -1,6 +1,6 @@
 <?php
-namespace fellingCustomer\Response;
-class Response
+namespace fellingCustomer\Responses;
+class Responses
 {
     public static function updateResponse()
     {

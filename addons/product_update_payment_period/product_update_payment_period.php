@@ -108,7 +108,7 @@ function product_update_payment_period_output($vars)
     $group= $model->getGroup();
     $currency= $model->getCurrency();
 
-    include __DIR__ . "/view/home.php";
+     include __DIR__ . "/view/home.php";
 
 }
 

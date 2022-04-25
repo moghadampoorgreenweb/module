@@ -1,0 +1,1 @@
+{"2":{"id":3,"name":"plan3","region":{"id":2,"name":"germany"},"spase":{"id":2,"name":"HDD"},"opratingsystem":{"id":3,"name":"centos 8"},"descripion":"cpu 15 Ram 12 16GB $65"},"3":{"id":4,"name":"plan4","region":{"id":2,"name":"germany"},"spase":{"id":2,"name":"HDD"},"opratingsystem":{"id":3,"name":"centos 8"},"descripion":"cpu 15 Ram 12 16GB $65"}}

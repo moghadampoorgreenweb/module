@@ -27,7 +27,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
             ->get())->where('type_tblpricing', 'product');
     }
 
-    public function whereAll($key, $where,$currency=null)
+    public function whereAll($key, $where, $currency = null)
     {
         return (Capsule::table('tblpricing')
             ->join('tblproducts', 'tblpricing.relid', 'tblproducts.id')
@@ -44,8 +44,9 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 'tblproducts.id as id_tblproducts',
                 'tblpricing.id as id_tblpricing',
                 'tblpricing.id as id_tblpricing')
-            ->get())->where($key, $where)->where('currency',$currency);
+            ->get())->where($key, $where)->where('currency', $currency)->where('type_tblpricing', 'product');
     }
+
     public function whereAllNotCurrency($key, $where)
     {
         return (Capsule::table('tblpricing')
@@ -61,9 +62,9 @@ class Model extends \Illuminate\Database\Eloquent\Model
                 'tblproducts.type as type_tblproducts',
                 'tblpricing.type as type_tblpricing',
                 'tblproducts.id as id_tblproducts',
-                'tblpricing.id as id_tblpricing',
-                'tblpricing.id as id_tblpricing')
-            ->get())->where($key, $where);
+                'tblpricing.id as id_tblpricing'
+                )
+            ->get())->where($key, $where)->first();
     }
 
     public function getGroup()
@@ -80,33 +81,40 @@ class Model extends \Illuminate\Database\Eloquent\Model
             ->get();
     }
 
-    public function updateAllCycleGroup($idTblPricing,$data)
+    public function updateAllCycleGroup($idTblPricing, $data)
     {
         try {
             list($value, $out) = $this->checkZero($data, $idTblPricing);
-            foreach ($out as $value){
-                Capsule::table('tblpricing')
-                    ->where('id',$out['id'])
-                    ->where('type','product')
-                    ->update($out);
-                echo "ID:".$out['id'] .'||'. $value ."<br>";
+            if ($out['id'] == null) {
+                return false;
             }
-        }catch (Exception $e){
-            file_put_contents(__DIR__.'/txt.txt',json_encode($e));
+            foreach ($out as $value) {
+                Capsule::table('tblpricing')
+                    ->where('id', $out['id'])
+                    ->where('type', 'product')
+                    ->update($out);
+                echo "ID:" . $out['id'] . '||' . $value . "<br>";
+            }
+        } catch (Exception $e) {
+            file_put_contents(__DIR__ . '/txt.txt', json_encode($e));
         }
     }
 
-   public function updateCycleGroup($idTblPricing,$data)
+    public function updateCycleGroup($idTblPricing, $data)
     {
         try {
-                Capsule::table('tblpricing')
-                    ->where('id',$idTblPricing)
-                    ->where('type','product')
-                    ->update($data);
-                echo "ID:".$idTblPricing ."<br>";
-
-        }catch (Exception $e){
-            file_put_contents(__DIR__.'/txt.txt',json_encode($e));
+            list($value, $out) = $this->checkZero($data, $idTblPricing);
+            if ($out['id'] == null) {
+                return false;
+            }
+            Capsule::table('tblpricing')
+                ->where('id', $out['id'])
+                ->where('type', 'product')
+                ->update($out);
+            echo "<br>" . "ID:" . $out['id'];
+            print_r(json_encode($out));
+        } catch (\Exception $e) {
+            file_put_contents(__DIR__ . '/txt.txt', json_encode($e));
         }
     }
 

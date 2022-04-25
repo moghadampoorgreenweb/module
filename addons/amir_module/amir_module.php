@@ -1,9 +1,9 @@
 <?php
 
-include_once __DIR__.'/vendor/autoload.php';
-include_once __DIR__.'/Models/Model.php';
-include_once __DIR__.'/Controllers/ModuleController.php';
-include_once __DIR__.'/Helpers/HelperModule.php';
+include_once __DIR__ . '/vendor/autoload.php';
+include_once __DIR__ . '/Models/Model.php';
+include_once __DIR__ . '/Controllers/ModuleController.php';
+include_once __DIR__ . '/Helpers/HelperModule.php';
 
 
 if (!defined("WHMCS"))
@@ -57,7 +57,7 @@ function amir_module_activate()
             'body' => 'amirrza',
             'phone' => '09354114548',
             'status' => 'pending',
-            'created_at' =>date("Y-m-d H:i:s"),
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
         return [
             // Supported values here include: success, error or info
@@ -103,29 +103,19 @@ function amir_module_output($vars)
 
     $module = $vars['modulelink'];
     $users = \amir_module\Helpers\HelperModule::getClients();
-//    d($users);
-    // dd($users);
-//    echo "<pre>";
-//    var_dump($users);
-
-   $controller=new ModuleController($_REQUEST);
-    $model=new \amir_module\Models\Model();
-
+    $controller = new ModuleController($_REQUEST);
+    $model = new \amir_module\Models\Model();
 
 
     switch ($_GET['action']) {
         case null:
             include __DIR__ . "/view/home.php";
             break;
-        case 'setting':
-            include __DIR__ . "/view/seting.php";
-            break;
         case 'log':
             include __DIR__ . "/view/log.php";
             break;
     }
 
-    // echo '<p>The date & time are currently ' . date("Y-m-d H:i:s") . '</p>';
 }
 
 

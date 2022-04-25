@@ -3,7 +3,6 @@
 <ul class="nav nav-tabs">
     <li role="presentation" class="active"><a href="<?php echo $vars['modulelink'] ?>">Home</a></li>
     <li role="presentation"><a href="<?php echo $vars['modulelink'] . '&action=log' ?>">Log</a></li>
-    <li role="presentation"><a href="<?php echo $vars['modulelink'] . '&action=setting' ?>">Setting</a></li>
 </ul>
 
 
@@ -53,15 +52,9 @@
         </tr>
         </thead>
         <tbody>
-
         <?php
-
         foreach ($users as $client) {
-
             ?>
-
-
-
             <tr>
                 <td><?php echo $client['firstname'] ?></td>
                 <td><?php echo $client['lastname'] ?></td>

@@ -22,13 +22,19 @@
         </div>
         <div class="form-group">
             <label for="pwd">Price cycle *:</label>
-            <select name="cycle" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" multiple>
+            <select name="cycle[]" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" multiple>
                 <option value="monthly" class="option" >monthly</option>
                 <option value="quarterly" class="option" >quarterly</option>
                 <option value="semiannually" class="option" >semiannually</option>
                 <option value="annually" class="option" >annually</option>
                 <option value="biennially" class="option" >biennially</option>
                 <option value="triennially" class="option" >triennially</option>
+                <option value="msetupfee" class="option" >msetupfee</option>
+                <option value="qsetupfee" class="option" >qsetupfee</option>
+                <option value="ssetupfee" class="option" >ssetupfee</option>
+                <option value="asetupfee" class="option" >asetupfee</option>
+                <option value="bsetupfee" class="option" >bsetupfee</option>
+                <option value="tsetupfee" class="option" >tsetupfee</option>
             </select>
         </div>
 
@@ -38,7 +44,7 @@
                 <?php
                 $data->each(function ($item){
                     echo "
-                      <option value=\"$item->id_tblproducts\" class=\"option\" >$item->id_tblpricing .$item->name .$item->name_tblproductgroups </option>
+                      <option value=\"$item->id_tblpricing\" class=\"option\" >$item->id_tblpricing .$item->name_tblcurrencies .$item->name .$item->name_tblproductgroups </option>
                     ";
                 });
                 ?>
@@ -47,7 +53,7 @@
 
         <div class="form-group">
             <label for="pwd">Currency *:</label>
-            <select name="currency" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" multiple>
+            <select name="currency[]" id="" class="mce-selectbox form-control mb-5 "  style="width: 100%" multiple>
                 <?php
                 $currency->each(function ($item){
                     echo "
@@ -61,7 +67,7 @@
 
         <div class="form-group">
             <label for="pwd">Group (optional):</label>
-            <select name="group" id="" class="mce-selectbox form-control"  style="width: 100%" multiple>
+            <select name="group[]" id="" class="mce-selectbox form-control"  style="width: 100%" multiple>
                 <?php
                 $group->each(function ($item){
                     echo "
@@ -99,6 +105,7 @@
             <th>quarterly</th>
             <th>semiannually</th>
             <th>annually</th>
+            <th>biennially</th>
             <th>triennially</th>
         </tr>
         </thead>

@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/vendor/autoload.php";
-include_once __DIR__ . "/Response/Response.php";
+include_once __DIR__ . "/Responses/Response.php";
 include_once __DIR__ . "/Report/Report.php";
 include_once __DIR__ . "/Paginate/Render.php";
 include_once __DIR__ . "/RenderExport/RenderExport.php";
