@@ -111,14 +111,63 @@ function order_vm_clientarea($vars)
     $region = \order_vm\Response\Response::serverRegion();
     $opratingsystem = \order_vm\Response\Response::opratingSystem();
     $space = \order_vm\Response\Response::space();
-    $plan = \order_vm\Response\Response::wherePlan($_GET['region'], $_GET['disk'],$_GET['opratingsystem']);
-    $bool=$controller->setOrder($plan);
-    if ($_GET['orderResult'] == true && $bool) {
 
-      return \order_vm\Response\Response::viewClientOut('plan',$region,$opratingsystem,$space,$plan,$_GET);
+    $planwhere = \order_vm\Response\Response::wherePlan($_REQUEST['region'], $_REQUEST['disk'], $_REQUEST['opratingsystem']);
+    $plan = \order_vm\Response\Response::serverPlan();
+    if (isset($_GET['action']) && $_GET['action'] === 'region' && isset($_GET['region'])){
+        file_put_contents(__DIR__.'/tx.txt','ok');
+        $id = $_GET['region'];
+        $os = $opratingsystem->filter(function ($item) use ($id) {
+            return $item['region']['id'] == $id;
+        })->values()->toArray();
+        http_response_code(200);
+        echo json_encode($os);
+        die;
+    }
+    if (isset($_GET['action']) && $_GET['action'] === 'os' && isset($_GET['region'])){
+        file_put_contents(__DIR__.'/tx.txt','ok');
+        $id = $_GET['region'];
+        $os = $space->filter(function ($item) use ($id) {
+            return $item['opratingSystem']['id'] == $id;
+        })->values()->toArray();
+        http_response_code(200);
+        echo json_encode($os);
+        die;
+    }
+    if (isset($_GET['action']) && $_GET['action'] === 'disk' && isset($_GET['region'])){
+        file_put_contents(__DIR__.'/tx.txt','ok');
+        $id = $_GET['region'];
+        $os = $space->filter(function ($item) use ($id) {
+            return $item['opratingSystem']['id'] == $id;
+        })->values()->toArray();
+        http_response_code(200);
+        echo json_encode($os);
+        die;
+    }
+    if (isset($_GET['action']) && $_GET['action'] === 'plan' && isset($_GET['region'])){
+        file_put_contents(__DIR__.'/tx.txt','ok');
+        $id = $_GET['region'];
+        $os = $plan->filter(function ($item) use ($id) {
+            return $item['spase']['id'] == $id;
+        })->values()->toArray();
+        http_response_code(200);
+        echo json_encode($os);
+        die;
+    }
+    
+    if (isset($_GET['action']) && $_GET['action'] === 'submit' && isset($_POST['region'])){
+        file_put_contents(__DIR__.'/tx.txt',json_encode($_REQUEST));
+        http_response_code(200);
+        $bool = $controller->setOrder($planwhere, $_REQUEST);
+        if ($_GET['orderResult'] == true && $bool) {
+
+            file_put_contents(__DIR__.'/tx.txt',json_encode($_REQUEST));
+            http_response_code(200);
+        }
     }
 
-    return \order_vm\Response\Response::viewClientOut('clientOrder',$region,$opratingsystem,$space,$plan,$_GET);
+
+    return \order_vm\Response\Response::viewClientOut('clientOrder', $region, $opratingsystem, $space, $plan, $_GET);
 }
 
 

@@ -27,16 +27,21 @@ class HelperModule
         return localAPI('GetClientsDetails', $postData);
     }
 
-    public static function addPlanOrder($plan)
+    public static function addPlanOrder($plan,$data)
     {
         if (isset($plan)) {
             $whereId= \order_vm\Response\Response::whereId($plan);
             $postData = array(
                 'clientid' => $_SESSION['uid'],
                 'pid' => self::PRODUCT_ID,
-                'hostname'=>$whereId['name'] .$whereId['descripion'],
+                'hostname'=>$whereId['name'] ,
                 'priceoverride'=>$whereId['price'],
                 'paymentmethod' => 'paypalcheckout',
+                'customfields'=>base64_encode(serialize([
+                    '4'=>$whereId['opratingsystem']['name'],
+                    '5'=>$whereId['region']['name'],
+                    '6'=>$whereId['descripion'],
+                ])),
             );
 
             $results = localAPI('AddOrder', $postData);

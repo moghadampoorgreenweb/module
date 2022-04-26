@@ -26,11 +26,26 @@ class Response
     {
         return collect([
             ['id' => 1,
-                'name' => 'ubuntu'],
+                'name' => 'ubuntu',
+                'region' => [
+                    'id' => 1,
+                    'name' => 'iran'
+                ]
+            ],
             ['id' => 2,
-                'name' => 'windows server'],
+                'name' => 'windows server',
+                'region' => [
+                    'id' => 2,
+                    'name' => 'germany'
+                ]
+            ],
             ['id' => 3,
-                'name' => 'centos 8'],
+                'name' => 'centos 8',
+                'region' => [
+                    'id' => 2,
+                    'name' => 'germany'
+                ]
+            ],
         ]);
     }
 
@@ -38,10 +53,19 @@ class Response
     {
         return collect([
             ['id' => 1,
-                'name' => 'SSD'],
+                'name' => 'SSD',
+                'opratingSystem' => [
+                    'id' => 1,
+                    'name' => 'ubuntu'
+                ]
+            ],
             ['id' => 2,
-                'name' => 'HDD'],
-
+                'name' => 'HDD',
+                'opratingSystem' => [
+                    'id' => 2,
+                    'name' => 'windows server'
+                ]
+            ],
         ]);
     }
 
@@ -51,15 +75,15 @@ class Response
         return collect([
             [
                 'id' => 1,
-                'price'=>1000,
-                'name' => 'plan1',
+                'price' => 1000,
+                'name' => 'plan2',
                 'region' => [
                     'id' => 1,
                     'name' => 'iran',
                 ],
                 'spase' => [
                     'id' => 1,
-                    'name' => 'HDD'
+                    'name' => 'SSD'
                 ],
                 'opratingsystem' => [
                     'id' => 1,
@@ -69,7 +93,7 @@ class Response
             ],
             [
                 'id' => 2,
-                'price'=>2000,
+                'price' => 2000,
                 'name' => 'plan2',
                 'region' => [
                     'id' => 2,
@@ -87,7 +111,7 @@ class Response
             ],
             [
                 'id' => 3,
-                'price'=>3000,
+                'price' => 3000,
                 'name' => 'plan3',
                 'region' => [
                     'id' => 2,
@@ -105,7 +129,7 @@ class Response
             ],
             [
                 'id' => 4,
-                'price'=>4000,
+                'price' => 4000,
                 'name' => 'plan4',
                 'region' => [
                     'id' => 2,
@@ -123,7 +147,7 @@ class Response
             ],
             [
                 'id' => 5,
-                'price'=>2000,
+                'price' => 2000,
                 'name' => 'plan1',
                 'region' => [
                     'id' => 1,
@@ -131,7 +155,7 @@ class Response
                 ],
                 'spase' => [
                     'id' => 1,
-                    'name' => 'HDD'
+                    'name' => 'SSD'
                 ],
                 'opratingsystem' => [
                     'id' => 2,
@@ -142,14 +166,14 @@ class Response
         ]);
     }
 
-    public static function wherePlan($region, $spase,$opratingsystem)
+    public static function wherePlan($region, $spase, $opratingsystem)
     {
         $plan = self::serverPlan();
         return $plan->where('region.id', '=', $region)
             ->where('spase.id', '=', $spase)
-            ->where('opratingsystem.id', '=', $opratingsystem);
-            ;
+            ->where('opratingsystem.id', '=', $opratingsystem);;
     }
+
     public static function whereId($id)
     {
         $plan = self::serverPlan();
@@ -158,7 +182,7 @@ class Response
     }
 
 
-    public static function viewClientOut($template,$region,$opratingsystem,$space,$plan,$get)
+    public static function viewClientOut($template, $region, $opratingsystem, $space, $plan, $get)
     {
         return array(
             'pagetitle' => 'Addon Module',
@@ -175,7 +199,6 @@ class Response
             ),
         );
     }
-
 
 
 }

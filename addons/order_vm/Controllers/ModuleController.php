@@ -31,11 +31,11 @@ class ModuleController
     }
 
 
-   public function setOrder(\Illuminate\Support\Collection $plan)
+   public function setOrder(\Illuminate\Support\Collection $plan,$data)
     {
         $bool = $plan->isNotEmpty();
         if ($bool) {
-            \order_vm\Helpers\HelperModule::addPlanOrder($this->data['plan']);
+            \order_vm\Helpers\HelperModule::addPlanOrder($this->data['plan'],$data);
         }
         return $bool;
     }
