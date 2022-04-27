@@ -14,10 +14,10 @@ if (!defined("WHMCS"))
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 
-function order_vm_config()
+function tiket_module_config()
 {
     $configarray = array(
-        "name" => "order_vm",
+        "name" => "tiket_module",
         "description" => "This is a sample config function for an addon module",
         "version" => "1.0",
         "author" => "WHMCS",
@@ -33,15 +33,15 @@ function order_vm_config()
 }
 
 
-function order_vm_activate()
+function tiket_module_activate()
 {
     // Create custom tables and schema required by your module
     try {
-        $table = Capsule::table('order_vm');
+        $table = Capsule::table('modulesmsnotify');
         if ($table) {
             Capsule::schema()
                 ->create(
-                    'order_vm',
+                    'modulesmsnotify',
                     function ($table) {
                         /** @var \Illuminate\Database\Schema\Blueprint $table */
                         $table->increments('id');
@@ -53,7 +53,7 @@ function order_vm_activate()
                     }
                 );
         }
-        Capsule::table('order_vm')->insert([
+        Capsule::table('modulesmsnotify')->insert([
             'user_id' => 1,
             'body' => 'amirrza',
             'phone' => '09354114548',
@@ -77,12 +77,12 @@ function order_vm_activate()
 }
 
 
-function order_vm_deactivate()
+function tiket_module_deactivate()
 {
     // Undo any database and schema modifications made by your module here
     try {
         Capsule::schema()
-            ->dropIfExists('order_vm');
+            ->dropIfExists('modulesmsnotify');
         return [
             // Supported values here include: success, error or info
             'status' => 'success',
@@ -99,24 +99,17 @@ function order_vm_deactivate()
 }
 
 
-function order_vm_output($vars)
+function tiket_module_output($vars)
 {
+
+    $controller = new \tiket_module\Controllers\ModuleController($_REQUEST);
 
 }
 
 
-function order_vm_clientarea($vars)
+function tiket_module_clientarea($vars)
 {
-    $controller = new \order_vm\Controllers\ModuleController($_REQUEST);
-    $region = \order_vm\Response\Response::serverRegion();
-    $opratingsystem = \order_vm\Response\Response::opratingSystem();
-    $space = \order_vm\Response\Response::space();
-    $planwhere = \order_vm\Response\Response::wherePlan($_REQUEST['region'], $_REQUEST['disk'], $_REQUEST['opratingsystem']);
-    $plan = \order_vm\Response\Response::serverPlan();
-    $controller->ajaxHandel($opratingsystem, $space, $plan, $controller, $planwhere);
 
-    return \order_vm\Response\Response::viewClientOut('clientOrder', $region, $opratingsystem, $space, $plan, $_GET);
+
 }
-
-
 

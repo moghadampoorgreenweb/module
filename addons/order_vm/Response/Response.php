@@ -76,7 +76,7 @@ class Response
             [
                 'id' => 1,
                 'price' => 1000,
-                'name' => 'plan2',
+                'name' => 'plan1',
                 'region' => [
                     'id' => 1,
                     'name' => 'iran',
@@ -148,7 +148,7 @@ class Response
             [
                 'id' => 5,
                 'price' => 2000,
-                'name' => 'plan1',
+                'name' => 'plan5',
                 'region' => [
                     'id' => 1,
                     'name' => 'iran',

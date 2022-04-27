@@ -1,1 +1,1 @@
-{"m":"order_vm","action":"submit","region":"2","opratingsystem":"3","disk":"2","plan":"2"}
+{"m":"order_vm","action":"submit","region":"","opratingsystem":"","disk":"","plan":""}
