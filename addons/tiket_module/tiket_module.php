@@ -37,29 +37,33 @@ function tiket_module_activate()
 {
     // Create custom tables and schema required by your module
     try {
-        $table = Capsule::table('modulesmsnotify');
+        $table = Capsule::table('tiket_module');
         if ($table) {
             Capsule::schema()
                 ->create(
-                    'modulesmsnotify',
+                    'tiket_module',
                     function ($table) {
                         /** @var \Illuminate\Database\Schema\Blueprint $table */
                         $table->increments('id');
-                        $table->integer('user_id');
-                        $table->text('body');
-                        $table->string('phone');
-                        $table->string('status');
+                        $table->integer('ticket_id');
+                        $table->integer('admin_id')->nullable();
+                        $table->string('vote',250);
+                        $table->timestamps();
+                    }
+                );
+            Capsule::schema()
+                ->create(
+                    'admin_weight',
+                    function ($table) {
+                        /** @var \Illuminate\Database\Schema\Blueprint $table */
+                        $table->increments('id');
+                        $table->integer('admin_id');
+                        $table->string('weight',250);
                         $table->timestamps();
                     }
                 );
         }
-        Capsule::table('modulesmsnotify')->insert([
-            'user_id' => 1,
-            'body' => 'amirrza',
-            'phone' => '09354114548',
-            'status' => 'pending',
-            'created_at' => date("Y-m-d H:i:s"),
-        ]);
+
         return [
             // Supported values here include: success, error or info
             'status' => 'success',
@@ -82,7 +86,9 @@ function tiket_module_deactivate()
     // Undo any database and schema modifications made by your module here
     try {
         Capsule::schema()
-            ->dropIfExists('modulesmsnotify');
+            ->dropIfExists('tiket_module');
+        Capsule::schema()
+            ->dropIfExists('admin_weight');
         return [
             // Supported values here include: success, error or info
             'status' => 'success',
@@ -102,7 +108,7 @@ function tiket_module_deactivate()
 function tiket_module_output($vars)
 {
 
-    $controller = new \tiket_module\Controllers\ModuleController($_REQUEST);
+     new \tiket_module\Controllers\ModuleController($_REQUEST);
 
 }
 

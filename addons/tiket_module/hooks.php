@@ -16,7 +16,6 @@ add_hook('TicketOpen', 1, function ($vars) {
 
 add_hook('AdminSupportTicketPagePreTickets', 1, function ($vars) {
     $controller = new \tiket_module\Controllers\ModuleController(null);
-//    d($controller->getAdminTiketsOnline());
     return $controller->getView();
 });
 

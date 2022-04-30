@@ -1,13 +1,13 @@
 <?php namespace tiket_module\Controllers;
 include_once __DIR__ . '/../Models/Model.php';
+include_once __DIR__ . '/../Models/Admin.php';
 include_once __DIR__ . '/../Helpers/HelperModule.php';
 include_once __DIR__ . '/../Configuration/Configuration.php';
 
 
-use order_vm\Response\Response;
 use tiket_module\Configuration\Configuration;
+use tiket_module\Models\Admin;
 use tiket_module\Models\Model;
-use   tiket_module\Helpers\HelperModule;
 
 class ModuleController
 {
@@ -16,11 +16,13 @@ class ModuleController
     private $ticket;
     private $alladmin;
     private Model $model;
+    private Admin $modelAdmin;
 
     public function __construct($data)
     {
         $this->data = $data;
         $this->model = new Model();
+        $this->modelAdmin = new Admin();
         $this->setTicket(\tiket_module\Response\Response::getTickets());
         $this->setAlladmin(\tiket_module\Response\Response::getAdmin());
         $this->render();
@@ -28,10 +30,11 @@ class ModuleController
 
     public function render()
     {
-        $this->single();
+        $this->assignTicket();
+        //  $this->assignTicketVoteInsert();
         $this->getTicketInProgress();
         $this->getAdminTiketsOnline();
-
+        //  d($this->modelAdmin->getAll());
 
     }
 
@@ -60,7 +63,9 @@ class ModuleController
         $return = $this->getTableHaed();
         $getDepartman = \tiket_module\Response\Response::getDepartments();
         collect($this->getAdminTiketsAll())->map(function ($item) use (&$return, $getDepartman) {
-            $return .= "<tr><th scope='row'>{$item['id']}</th><td>{$item['fullName']}</td><td>{$item['count']}</td><td> ";
+            $online = collect($this->getAdminTiketsOnline())->where('id', '=', $item['id']);
+            $bool = $online->isNotEmpty() ? 'online' : 'offline';
+            $return .= "<tr><th scope='row'>{$item['id']}</th><td>{$item['fullName']}</td><td>{$item['count']}</td><td>{$bool}</td><td> ";
             collect($item['supportDepartmentIds'])->each(function ($items) use ($item, &$return, $getDepartman) {
                 $out = collect($getDepartman['departments']['department'])->where('id', '=', $items['supportDepartmentIds'])->values();
                 $return .= "{$out[0]['name']} ,";
@@ -85,7 +90,7 @@ class ModuleController
     }
 
 
-    public function single()
+    public function assignTicket()
     {
         $dataadmin = $this->getAdminTiketsOnline();
         $datatiketOpen = $this->getTicketInProgress();
@@ -94,11 +99,28 @@ class ModuleController
         }
         $dataadmin = collect($dataadmin)->sortBy('count')->first();
         $datatiketOpen = collect($datatiketOpen)->first();
+        list($dataadmin,$datatiketOpen)=$this->assignTicketVoteInsert($datatiketOpen, $dataadmin);
+
+        $this->model->updates($datatiketOpen['id'],$dataadmin['id']);
         \tiket_module\Response\Response::updateTicket($datatiketOpen['id'], $dataadmin['id']);
-
-
     }
 
+    public function assignTicketVoteInsert($dataTiketOpen, $dataadmin)
+    {
+        $this->model->create([
+            'ticket_id' => $dataTiketOpen['id'],
+            'vote' => rand(1, 10),
+            'created_at' => date("Y-m-d H:i:s")
+        ]);
+        $adminvoteData = $this->modelAdmin->getAll();
+        $ticketvoteData = $this->model->getAll();
+        $ticketvoteData = collect($ticketvoteData)->where('ticket_id', '=', $dataTiketOpen['id']);
+        $dataTiketOpen = collect($dataTiketOpen)->merge(['vote' => $ticketvoteData->values()[0]->vote]);
+        $adminvoteData = $adminvoteData->where('admin_id', '=', $dataadmin['id'])->first();
+        $adminvoteData = collect($dataadmin)->merge(['weight' => $adminvoteData->weight]);
+
+        return [$adminvoteData,$dataTiketOpen];
+    }
 
     /**
      * @return mixed
@@ -180,7 +202,9 @@ class ModuleController
             return collect($admin)->merge(['ticket' => $data->toArray()])->merge(['count' => $tiketvalue]);
         });
         return $adminTiket;
-    }    /**
+    }
+
+    /**
      * @param $admin
      * @param $tiket
      * @return \Illuminate\Support\Collection
@@ -249,13 +273,13 @@ class ModuleController
      */
     public function getTableHaed(): string
     {
-        $return = '
-                    <table class="table">
+        $return = ' <table class="table">
                       <thead>
                         <tr>
                           <th scope="col">id</th>
                           <th scope="col">Full name</th>
                           <th scope="col">count tiket</th>
+                          <th scope="col">status</th>                      
                           <th scope="col">departman</th>                      
                         </tr>
                       </thead>
@@ -269,8 +293,7 @@ class ModuleController
      */
     public function getTableFooter(string $return): string
     {
-        $return .= '             
-                      </tbody>
+        $return .= ' </tbody>
                     </table>';
         return $return;
     }
