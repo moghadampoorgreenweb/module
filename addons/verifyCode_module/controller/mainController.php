@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: m.farzaneh
@@ -14,12 +15,12 @@ class mainController
         $header = __DIR__ . "/../theme/header.php";
         $footer = __DIR__ . "/../theme/footer.php";
         $file = __DIR__ . "/../theme/$theme.php";
-        if (!file_exists($file)){
+        if (!file_exists($file)) {
             echo "$theme file is not exist in: $file";
             return false;
         }
 
-        if($var)
+        if ($var)
             extract($var);
 
         require_once $header;
@@ -27,7 +28,9 @@ class mainController
         require_once $footer;
     }
 
-    static function loadCss($file){
+    static function loadCss($file)
+    {
+
         return "<link href='" . BASE_URL . "/theme/hrc/css/$file.css' type='text/css' rel='stylesheet'>";
     }
 }

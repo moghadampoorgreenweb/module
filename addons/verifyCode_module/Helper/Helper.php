@@ -1,8 +1,31 @@
 <?php
+
+namespace verifyCode_module\Helper;
+
 use Respect\Validation\Validator as v;
 
 class Helper
 {
+
+    public function getClients()
+    {
+        $results = localAPI('GetClients');
+
+        return collect($results['clients']['client'])->map(function ($item) {
+            $postData = array(
+                'clientid' => $item['id'],
+                'stats' => true,
+            );
+            return localAPI('GetClientsDetails', $postData);
+        });
+    }
+
+    public function wherePhoneClient($phone)
+    {
+
+      return  collect($this->getClients())->where('phonenumber','=',$phone)->first();
+    }
+
 
     public function getClient($email)
     {
@@ -12,6 +35,7 @@ class Helper
             'search' => $email,
         );
         $results = localAPI($command, $postData);
+
         if (empty($results['result']) && is_null($results['result'])) {
 
             return false;

@@ -1,8 +1,8 @@
 {
-    "name": "a.moghadampoor/is_customers",
+    "name": "a.moghadampoor/verify-code_module",
     "autoload": {
         "psr-4": {
-            "AMoghadampoor\\IsCustomers\\": "src/"
+            "AMoghadampoor\\VerifyCodeModule\\": "src/"
         }
     },
     "authors": [
@@ -12,9 +12,7 @@
         }
     ],
     "require": {
-        "illuminate/validation": "8.x-dev",
-        "respect/validation": "^2.2",
-        "savvot/random": "^0.3.0",
-        "nesbot/carbon": "^2.57"
+        "symfony/var-dumper":"<5.3.4",
+        "larapack/dd": "^1.1"
     }
 }
